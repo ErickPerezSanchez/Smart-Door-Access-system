@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Door</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="authView" class="auth-layout">
+        <div class="auth-panel">
+          <h1>Smart Door Access System Cloud</h1>
+          <form id="authForm" class="stack">
+            <label>
+              Email
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@example.com">
+            </label>
+            <label>
+              Password
+              <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="8+ characters">
+            </label>
+            <div class="auth-actions">
+              <button id="authSubmit" type="submit">Create Account</button>
+              <button id="toggleAuth" class="ghost" type="button">Log In</button>
+            </div>
+          </form>
+          <p id="authMessage" class="message"></p>
+        </div>
+      </section>
+
+      <section id="dashboardView" class="dashboard hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Cloud + Database Side</p>
+            <h1 id="orgTitle">Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <span id="accountEmail" class="account-pill"></span>
+            <button id="logoutButton" class="ghost" type="button">Log Out</button>
+          </div>
+        </header>
+
+        <section class="metrics" aria-label="Account stats">
+          <div>
+            <span id="userCount">0</span>
+            <p>Authorized Users</p>
+          </div>
+          <div>
+            <span id="doorCount">0</span>
+            <p>Doors</p>
+          </div>
+          <div>
+            <span id="assignmentCount">0</span>
+            <p>Door Grants</p>
+          </div>
+        </section>
+
+        <div class="workspace">
+          <section class="panel enroll-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Face List</p>
+                <h2>Add Authorized User</h2>
+              </div>
+              <button id="startCamera" class="secondary" type="button">Start Camera</button>
+            </div>
+            <div class="camera-wrap">
+              <video id="camera" autoplay playsinline muted></video>
+              <canvas id="snapshotCanvas" class="hidden"></canvas>
+              <img id="snapshotPreview" alt="Captured face preview" class="hidden">
+              <div id="cameraPlaceholder" class="camera-placeholder">Camera preview</div>
+            </div>
+            <form id="enrollForm" class="stack compact">
+              <label>
+                Full Name
+                <input id="fullName" required placeholder="Team member name">
+              </label>
+              <div class="inline-actions">
+                <button id="captureFace" type="button" class="secondary">Capture Face</button>
+                <button id="saveUser" type="submit">Save User</button>
+              </div>
+            </form>
+            <p id="enrollMessage" class="message"></p>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Database</p>
+                <h2>Authorized Users</h2>
+              </div>
+            </div>
+            <div id="usersList" class="list empty-state">No authorized users yet.</div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Jetson Nano</p>
+                <h2>Door Sync</h2>
+              </div>
+            </div>
+            <form id="doorForm" class="stack compact">
+              <label>
+                Door / Jetson Name
+                <input id="doorName" required placeholder="Main Jetson Door">
+              </label>
+              <button type="submit">Add Door Setup</button>
+            </form>
+            <div id="doorsList" class="list empty-state">No Jetson door setup added yet.</div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Who Gets In</p>
+                <h2>Match People To Doors</h2>
+              </div>
+            </div>
+            <form id="assignmentForm" class="stack compact">
+              <div class="split">
+                <label>
+                  Person
+                  <select id="assignUser"></select>
+                </label>
+                <label>
+                  Door
+                  <select id="assignDoor"></select>
+                </label>
+              </div>
+              <button type="submit">Grant Door Access</button>
+            </form>
+            <div id="assignmentsList" class="list empty-state">No door grants yet.</div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Access Logs</p>
+                <h2>Recent Door Activity</h2>
+              </div>
+              <button id="refreshLogs" class="secondary" type="button">Refresh</button>
+            </div>
+            <div id="accessLogsList" class="list empty-state">No access logs yet.</div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
